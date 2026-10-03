@@ -18,11 +18,11 @@ It replaces the three little dots with a VCR's on-screen display, a split-flap d
 In Claude Code:
 
 ```
-/plugin marketplace add vgnshiyer/nowloading
+/plugin marketplace add vgnshiyer/mods
 /plugin install nowloading@vgnshiyer
 ```
 
-Requires a Claude Code version with mods (function hooks). The `vgnshiyer` marketplace also lists [tps-report](https://github.com/vgnshiyer/tps-report).
+Requires a Claude Code version with mods (function hooks). [vgnshiyer/mods](https://github.com/vgnshiyer/mods) lists my other mods too.
 
 ## Use
 
