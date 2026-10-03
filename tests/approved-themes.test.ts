@@ -4,7 +4,7 @@ import { NAMES, THEMES } from '../themes/index.js'
 import { FRAMES } from '../themes/frames/index.js'
 import { fallback, frameState, type Snapshot } from '../hooks/state.ts'
 
-const APPROVED = ['floppy', 'dotmatrix', 'rally', 'filmstrip'] as const
+const APPROVED = ['floppy', 'dotmatrix', 'rally', 'filmstrip', 'campfire'] as const
 const STATES: Snapshot[] = [
   { mode: 'requesting', running: false, elapsed: 0 },
   { mode: 'thinking', running: false, elapsed: 0 },
@@ -120,7 +120,7 @@ for (const name of APPROVED) {
   }
 }
 
-test('Rally plays its error intro once, then holds the final frame across redraws', { options: { theme: 'rally' } }, async ($, on) => {
+for (const name of ['rally', 'campfire'] as const) test(`${name} plays its error intro once, then holds the final frame across redraws`, { options: { theme: name } }, async ($, on) => {
   const blits: string[] = []
   const clock = engine(on, {}, blits)
   on('tool.call', () => ({ result: 'miss', isError: true }))
@@ -130,7 +130,7 @@ test('Rally plays its error intro once, then holds the final frame across redraw
   await $.tool.call({ tool: 'Bash', command: 'read files' })
   blits.length = 0
   await clock.advance(1200)
-  const pack = FRAMES.rally, sequence = pack.states.error
+  const pack = FRAMES[name], sequence = pack.states.error
   const expected = Array.from({ length: 12 }, (_, i) => {
     const at = i + 1
     return pack.frames[at < sequence.intro.length ? sequence.intro[at] : sequence.loop[(at - sequence.intro.length) % sequence.loop.length]]

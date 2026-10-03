@@ -70,5 +70,8 @@ export function fallback(name: string, s: Snapshot): string {
   if (name === 'filmstrip') {
     return { requesting: 'THREAD', thinking: 'HOLD', tool: 'ROLL', ok: 'CUT', error: 'JAM', responding: 'PLAY' }[state]
   }
+  if (name === 'campfire') {
+    return { requesting: 'LIT', thinking: 'LOW', tool: 'HOT', ok: 'POP', error: 'OUT', responding: 'ON' }[state]
+  }
   return '⧗'
 }
