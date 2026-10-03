@@ -1,0 +1,53 @@
+<!doctype html>
+<!-- Frame capture page for art/frames.mjs: draws one look in one state, then steps its SMIL clock frame by frame. -->
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; background: transparent; }
+  #stage { position: absolute; left: 0; top: 0; line-height: 0; color: var(--ink, #8b8984); }
+  #stage svg { display: block; }
+</style>
+<div id="stage"></div>
+<script type="module">
+import { THEMES } from '../themes/index.js'
+
+const stage = document.getElementById('stage')
+const seconds = value => {
+  const v = String(value ?? '0').trim()
+  if (v === '' || v === 'indefinite') return 0
+  return v.endsWith('ms') ? parseFloat(v) / 1000 : parseFloat(v)
+}
+
+// Draws `name` for each snapshot in turn (earlier ones prime looks that remember the last state, like the
+// flap board's riffle) and keeps the last drawing. Returns its size and timing: `intro` is when every
+// one-shot animation has finished, `loop` the period of the repeating ones (0 when nothing repeats).
+window.place = (name, snapshots, scale, ink) => {
+  const look = THEMES[name]
+  let markup = ''
+  for (const s of snapshots) markup = look.art(s)
+  stage.style.setProperty('--ink', ink)
+  stage.innerHTML = markup
+  const svg = stage.querySelector('svg')
+  const w = parseFloat(svg.getAttribute('width')), h = parseFloat(svg.getAttribute('height'))
+  svg.setAttribute('width', w * scale)
+  svg.setAttribute('height', h * scale)
+  let intro = 0
+  const loops = []
+  for (const a of svg.querySelectorAll('animate, animateTransform, animateMotion, set')) {
+    const dur = seconds(a.getAttribute('dur'))
+    const begin = Math.max(0, seconds(a.getAttribute('begin')))
+    if (a.getAttribute('repeatCount') === 'indefinite' && dur > 0) loops.push({ dur, begin })
+    else intro = Math.max(intro, begin + dur * (parseFloat(a.getAttribute('repeatCount')) || 1))
+  }
+  for (const l of loops) intro = Math.max(intro, l.begin)
+  svg.pauseAnimations()
+  svg.setCurrentTime(0)
+  return { width: Math.ceil(w * scale), height: Math.ceil(h * scale), cssWidth: w, intro, loops: loops.map(l => l.dur) }
+}
+
+window.seek = t => {
+  const svg = stage.querySelector('svg')
+  svg.setCurrentTime(t)
+  return t
+}
+window.ready = true
+</script>

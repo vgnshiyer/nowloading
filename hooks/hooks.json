@@ -1,0 +1,4 @@
+{
+  "description": "Draws the working line as the chosen nowloading theme",
+  "modules": ["./register.ts"]
+}

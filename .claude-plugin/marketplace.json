@@ -1,0 +1,22 @@
+{
+  "name": "vgnshiyer",
+  "owner": {
+    "name": "vgnshiyer"
+  },
+  "description": "vgnshiyer's Claude Code mods",
+  "plugins": [
+    {
+      "name": "nowloading",
+      "source": "./",
+      "description": "The line that animates while Claude works, redrawn as something from before."
+    },
+    {
+      "name": "tps-report",
+      "source": {
+        "source": "github",
+        "repo": "vgnshiyer/tps-report"
+      },
+      "description": "Bill from management drops by above the prompt while Claude works. A parody."
+    }
+  ]
+}

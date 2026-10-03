@@ -1,0 +1,8 @@
+.DS_Store
+# Written by Claude Code when it loads the mod; they point at the generated types
+tsconfig.json
+.claude-plugin/types/
+# The frame builder's raw captures (art/frames.mjs); art/pack.py turns them into themes/frames/
+art/.frames/
+# The README recorder's raw frames (art/gifs.mjs); art/gif.py turns them into docs/*.gif
+art/.gifs/

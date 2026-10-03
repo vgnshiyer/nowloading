@@ -1,0 +1,36 @@
+{
+  "name": "nowloading",
+  "version": "0.1.0",
+  "description": "The line that animates while Claude works, redrawn as something from before: a VCR's on-screen display, a split-flap departure board, an hourglass.",
+  "author": {
+    "name": "vgnshiyer"
+  },
+  "homepage": "https://github.com/vgnshiyer/nowloading",
+  "repository": "https://github.com/vgnshiyer/nowloading",
+  "license": "MIT",
+  "keywords": [
+    "mod",
+    "spinner",
+    "nostalgia",
+    "retro",
+    "vhs"
+  ],
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "theme": {
+      "type": "string",
+      "title": "Theme",
+      "description": "The animation drawn while Claude works. /nowloading <theme> also picks one for every session; whichever you set last wins. random picks a new one each turn.",
+      "default": "rewind",
+      "options": [
+        "rewind",
+        "channel3",
+        "cassette",
+        "platform",
+        "arrivals",
+        "sandglass",
+        "random"
+      ]
+    }
+  }
+}

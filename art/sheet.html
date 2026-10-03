@@ -1,0 +1,37 @@
+<!-- Contact sheet of one theme family, every look in every state: art/render.py screenshots it. -->
+<!doctype html><meta charset="utf-8">
+<style>
+  body { margin: 0; padding: 16px; font: 15px/20px -apple-system, system-ui, sans-serif; background: #fff; display: flex; gap: 16px; }
+  .col { padding: 14px 18px; border-radius: 8px; width: 880px; flex-shrink: 0; overflow: hidden; }
+  .light { background: #ffffff; color: #8b8984; --fg: #1f1e1d; outline: 1px solid #eee; }
+  .dark { background: #262624; color: #9d9b93; --fg: #ebe9e2; }
+  h3 { margin: 10px 0 6px; font-size: 13px; color: var(--fg); }
+  .state { font-size: 11px; color: inherit; opacity: .7; width: 86px; flex-shrink: 0; }
+  .row { display: flex; align-items: center; height: 20px; white-space: nowrap; margin: 4px 0; }
+  .zoom { zoom: 3; }
+  .zoom .state { zoom: .34; width: 260px; font-size: 30px; }
+  .art { display: inline-flex; align-items: center; height: 20px; }
+  .art svg, .tail svg { display: block; }
+  .text { margin-left: 8px; } .tail { margin-left: 8px; font-variant-numeric: tabular-nums; display: inline-flex; }
+</style>
+<body><script type="module">
+import { nativeTime } from '../themes/kit.js'
+import { FAMILIES } from '../themes/index.js'
+import { snapshot } from './turn.js'
+const key = new URLSearchParams(location.search).get('family')
+const STATES = [['Working', 0], ['Thinking', 1], ['Tool running', 4], ['Tool failed', 5], ['Writing', 11], ['Done', 12]]
+for (const scheme of ['light', 'dark']) {
+  const col = document.createElement('div'); col.className = 'col ' + scheme; document.body.appendChild(col)
+  for (const fam of FAMILIES.filter(f => f.key === key)) for (const look of fam.looks) {
+    col.insertAdjacentHTML('beforeend', `<h3>${look.name} — ${look.note}</h3>`)
+    for (const zoom of [true, false]) {
+      const box = document.createElement('div'); if (zoom) box.className = 'zoom'; col.appendChild(box)
+      for (const [label, step] of (zoom ? STATES : STATES.filter((_, i) => i === 2 || i === 4))) {
+        const s = snapshot(step, 75)
+        const text = s.mode === 'done' ? s.text : s.text + '…'
+        box.insertAdjacentHTML('beforeend', `<div class="row"><span class="state">${label}${zoom ? '' : ' (1x)'}</span><span class="art">${look.art(s)}</span><span class="text">${text}</span><span class="tail">${look.tail ? look.tail(s) : nativeTime(s.elapsed)}</span></div>`)
+      }
+    }
+  }
+}
+</script>

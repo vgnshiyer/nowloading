@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- One theme's turn line in light and dark, driven frame by frame by art/gifs.mjs for the README. -->
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; background: transparent; }
+  #card { display: inline-block; font: 15px/20px -apple-system, system-ui, sans-serif; }
+  .scheme { padding: 14px 20px; width: 400px; }
+  .light { background: #ffffff; color: #8b8984; }
+  .dark { background: #262624; color: #9d9b93; }
+  .row { display: flex; align-items: center; height: 20px; white-space: nowrap; }
+  .art, .tail { display: inline-flex; align-items: center; height: 20px; }
+  .art svg, .tail svg { display: block; }
+  .text { margin-left: 8px; } .tail { margin-left: 8px; font-variant-numeric: tabular-nums; }
+</style>
+<div id="card"></div>
+<script type="module">
+import { nativeTime } from '../themes/kit.js'
+import { THEMES } from '../themes/index.js'
+import { SCRIPT, snapshot } from './turn.js'
+
+// The turn the GIF plays: one step per beat
+const STEPS = [0, 1, 4, 5, 6, 7, 8, 11]
+const BEAT = 1.5
+const card = document.getElementById('card')
+let rows = []
+
+window.load = name => {
+  card.innerHTML = ['light', 'dark'].map(c => `<div class="scheme ${c}"><div class="row"><span class="art"></span><span class="text"></span><span class="tail"></span></div></div>`).join('')
+  // Both schemes draw the same snapshot each frame, so the look's memory (the board's last word) agrees
+  rows = [...card.querySelectorAll('.row')].map(el => ({ el, look: THEMES[name], art: { markup: '', start: 0 }, tail: { markup: '', start: 0 }, step: -1 }))
+  const box = card.getBoundingClientRect()
+  return { width: Math.ceil(box.width), height: Math.ceil(box.height), seconds: STEPS.length * BEAT }
+}
+
+function show(slot, el, markup, t) {
+  if (markup !== slot.markup) { el.innerHTML = markup; slot.markup = markup; slot.start = t }
+  const svg = el.querySelector('svg')
+  if (svg) { svg.pauseAnimations(); svg.setCurrentTime(Math.max(0, t - slot.start)) }
+}
+
+window.frame = t => {
+  const index = Math.min(STEPS.length - 1, Math.floor(t / BEAT))
+  for (const row of rows) {
+    const s = snapshot(STEPS[index], 75 + t)
+    const text = s.mode === 'done' ? s.text : `${s.text}…`
+    show(row.art, row.el.querySelector('.art'), row.look.art(s), t)
+    row.el.querySelector('.text').textContent = text
+    if (row.look.tail) show(row.tail, row.el.querySelector('.tail'), row.look.tail(s), t)
+    else row.el.querySelector('.tail').textContent = nativeTime(s.elapsed)
+  }
+  return index
+}
+window.ready = true
+</script>
