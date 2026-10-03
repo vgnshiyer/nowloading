@@ -7,7 +7,8 @@ import floppy from './floppy.js'
 import dotmatrix from './dotmatrix.js'
 import rally from './rally.js'
 import filmstrip from './filmstrip.js'
+import campfire from './campfire.js'
 
-export const FAMILIES = [vhs, splitflap, sandglass, floppy, dotmatrix, rally, filmstrip]
+export const FAMILIES = [vhs, splitflap, sandglass, floppy, dotmatrix, rally, filmstrip, campfire]
 export const THEMES = Object.fromEntries(FAMILIES.flatMap(family => family.looks.map(look => [look.name, look])))
 export const NAMES = Object.keys(THEMES)

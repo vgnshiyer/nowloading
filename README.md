@@ -2,7 +2,7 @@
 
 The line that animates while Claude Code works, redrawn as something from before.
 
-It replaces the three little dots with an old machine at work: a VCR's on-screen display, a split-flap departure board, a one-bit hourglass, a floppy drive, a dot-matrix printer, an arcade rally or a filmstrip. Each one follows what Claude is actually doing: thinking, running a tool, a tool failing, writing the answer. It works in the desktop app's Code tab and in the terminal, where Ghostty and kitty show it as real pixels.
+It replaces the three little dots with something from before: a VCR's on-screen display, a split-flap departure board, a one-bit hourglass, a floppy drive, a dot-matrix printer, an arcade rally, a filmstrip or a pixel campfire. Each one follows what Claude is actually doing: thinking, running a tool, a tool failing, writing the answer. It works in the desktop app's Code tab and in the terminal, where Ghostty and kitty show it as real pixels.
 
 | Theme | |
 | --- | --- |
@@ -16,6 +16,7 @@ It replaces the three little dots with an old machine at work: a VCR's on-screen
 | `dotmatrix`: a print head crosses tractor paper. It prints through tools, parks on success, and creases the paper when a tool jams. | ![dotmatrix](docs/dotmatrix.gif) |
 | `rally`: two paddles keep a rally going. A tool speeds up the game; success lands a clean return, and failure misses the paddle. | ![rally](docs/rally.gif) |
 | `filmstrip`: frames and sprocket holes pass through a projector gate. It holds a frame while thinking and stops on a check or a jam after a tool. | ![filmstrip](docs/filmstrip.gif) |
+| `campfire`: a small pixel fire over crossed logs. It flickers gently while thinking, burns faster through tools, sends up a spark on success, and sputters into smoke after a failure. | ![campfire](docs/campfire.gif) |
 
 ## Install
 
