@@ -192,13 +192,19 @@ export const register: Register = (on, options) => {
       const art = look.art(s)
       const tail = look.tail?.(s)
       const time = nativeTime(s.elapsed)
+      // Real gaps, not spaces: the desktop trims spaces at the edges of each piece. A long step is cut with an
+      // ellipsis so the time never leaves the line.
+      // The desktop's word is a placeholder ("Working") when the row has no step of its own: the running tool
+      // shows its description on its own line, so this line then shows just the art and the time
+      const step = e.props.message === null && e.props.word === 'Working' ? [] : [Text({ wrap: 'truncate-end', children: [text] })]
       return Box({
         flexDirection: 'row',
         alignItems: 'center',
+        columnGap: 1,
         children: [
           Svg({ source: art, alt: `${current}: ${fallback(current, s)}`, width: widthOf(art), height: 20 }),
-          Text({ children: [` ${text} `] }),
-          tail ? Svg({ source: tail, alt: time, width: widthOf(tail), height: 20 }) : Text({ children: [` ${time}`] }),
+          ...step,
+          tail ? Svg({ source: tail, alt: time, width: widthOf(tail), height: 20 }) : Text({ children: [time] }),
         ],
       })
     }

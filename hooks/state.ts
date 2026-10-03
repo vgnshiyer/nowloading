@@ -58,5 +58,17 @@ export function fallback(name: string, s: Snapshot): string {
   if (name === 'platform' || name === 'arrivals') {
     return { requesting: 'CHECK IN', thinking: 'BOARDING', tool: 'EN ROUTE', ok: 'EN ROUTE', error: 'DELAYED', responding: 'LANDING' }[state]
   }
+  if (name === 'floppy') {
+    return { requesting: 'LOAD', thinking: 'SEEK', tool: 'READ', ok: 'SAVED', error: 'ERROR', responding: 'WRITE' }[state]
+  }
+  if (name === 'dotmatrix') {
+    return { requesting: 'FEED', thinking: 'WAIT', tool: 'PRINT', ok: 'OK', error: 'JAM', responding: 'WRITE' }[state]
+  }
+  if (name === 'rally') {
+    return { requesting: 'SERVE', thinking: 'WAIT', tool: 'RALLY', ok: 'HIT', error: 'MISS', responding: 'PLAY' }[state]
+  }
+  if (name === 'filmstrip') {
+    return { requesting: 'THREAD', thinking: 'HOLD', tool: 'ROLL', ok: 'CUT', error: 'JAM', responding: 'PLAY' }[state]
+  }
   return '⧗'
 }

@@ -72,6 +72,16 @@ test("another mod's message shows in the step text", { options: { theme: 'sandgl
   expect(await ui.find({ type: 'Text', text: /Preparing TPS reports…/ })).toBeDefined()
 })
 
+test("the desktop's placeholder word is left out, so the line is just the art and the time", { options: { theme: 'rewind' } }, async ($, on) => {
+  const clock = engine(on)
+  await $.session.start({ surface: 'desktop', isInteractive: true, cwd: '/work' })
+  await $.turn.start(TURN)
+  await clock.advance(5000)
+  const ui = await $.ui.mount(spinner('desktop', { word: 'Working', mode: 'thinking' }))
+  expect(await ui.find({ type: 'Text', text: /Working/ })).toBeUndefined()
+  expect(await ui.findAll({ type: 'Svg' })).toHaveLength(2)
+})
+
 test('the terminal swaps frames in place while Claude works', { options: { theme: 'sandglass' } }, async ($, on) => {
   const blits: string[] = []
   const clock = engine(on, {}, blits)

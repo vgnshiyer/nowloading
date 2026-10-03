@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url'
 export const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const CHROME = process.env.CHROME ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript' }
+const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript' }
 export function serve() {
   const server = createServer((req, res) => {
     const path = join(ROOT, decodeURIComponent(new URL(req.url, 'http://x').pathname))
