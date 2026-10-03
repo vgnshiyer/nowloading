@@ -23,7 +23,7 @@ In Claude Code:
 
 ```
 /plugin marketplace add vgnshiyer/mods
-/plugin install nowloading@vgnshiyer
+/plugin install nowloading@vgnshiyer-mods
 ```
 
 Requires a Claude Code version with mods (function hooks). [vgnshiyer/mods](https://github.com/vgnshiyer/mods) lists my other mods too.
