@@ -9,5 +9,6 @@ import floppy from './floppy.js'
 import dotmatrix from './dotmatrix.js'
 import rally from './rally.js'
 import filmstrip from './filmstrip.js'
+import campfire from './campfire.js'
 
-export const FRAMES = { rewind, channel3, cassette, platform, arrivals, sandglass, floppy, dotmatrix, rally, filmstrip }
+export const FRAMES = { rewind, channel3, cassette, platform, arrivals, sandglass, floppy, dotmatrix, rally, filmstrip, campfire }

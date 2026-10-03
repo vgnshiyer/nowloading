@@ -1,7 +1,7 @@
 {
   "name": "nowloading",
-  "version": "0.2.0",
-  "description": "The line that animates while Claude works, redrawn as something from before: tape decks, departure boards, an hourglass, a floppy drive, a dot-matrix printer, an arcade rally, and a filmstrip.",
+  "version": "0.3.0",
+  "description": "The line that animates while Claude works, redrawn as something from before: tape decks, departure boards, an hourglass, a floppy drive, a dot-matrix printer, an arcade rally, a filmstrip, and a pixel campfire.",
   "author": {
     "name": "vgnshiyer"
   },
@@ -33,6 +33,7 @@
         "dotmatrix",
         "rally",
         "filmstrip",
+        "campfire",
         "random"
       ]
     }
