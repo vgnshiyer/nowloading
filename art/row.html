@@ -1,5 +1,6 @@
 <!doctype html>
-<!-- One theme's turn line in light and dark, driven frame by frame by art/gifs.mjs for the README. -->
+<!-- One theme's turn line as the Code tab draws it, light and dark, driven frame by frame by art/gifs.mjs for the README:
+     the art, the time, and while it thinks the tab's own gray 'Thinking' label (the running tool keeps its own line). -->
 <meta charset="utf-8">
 <style>
   html, body { margin: 0; background: transparent; }
@@ -10,7 +11,8 @@
   .row { display: flex; align-items: center; height: 20px; white-space: nowrap; }
   .art, .tail { display: inline-flex; align-items: center; height: 20px; }
   .art svg, .tail svg { display: block; }
-  .text { margin-left: 8px; } .tail { margin-left: 8px; font-variant-numeric: tabular-nums; }
+  .tail { margin-left: 8px; font-variant-numeric: tabular-nums; }
+  .label { margin-left: 8px; opacity: .62; }
 </style>
 <div id="card"></div>
 <script type="module">
@@ -25,7 +27,7 @@ const card = document.getElementById('card')
 let rows = []
 
 window.load = name => {
-  card.innerHTML = ['light', 'dark'].map(c => `<div class="scheme ${c}"><div class="row"><span class="art"></span><span class="text"></span><span class="tail"></span></div></div>`).join('')
+  card.innerHTML = ['light', 'dark'].map(c => `<div class="scheme ${c}"><div class="row"><span class="art"></span><span class="tail"></span><span class="label"></span></div></div>`).join('')
   // Both schemes draw the same snapshot each frame, so the look's memory (the board's last word) agrees
   rows = [...card.querySelectorAll('.row')].map(el => ({ el, look: THEMES[name], art: { markup: '', start: 0 }, tail: { markup: '', start: 0 }, step: -1 }))
   const box = card.getBoundingClientRect()
@@ -42,9 +44,8 @@ window.frame = t => {
   const index = Math.min(STEPS.length - 1, Math.floor(t / BEAT))
   for (const row of rows) {
     const s = snapshot(STEPS[index], 75 + t)
-    const text = s.mode === 'done' ? s.text : `${s.text}…`
     show(row.art, row.el.querySelector('.art'), row.look.art(s), t)
-    row.el.querySelector('.text').textContent = text
+    row.el.querySelector('.label').textContent = s.mode === 'thinking' ? 'Thinking' : ''
     if (row.look.tail) show(row.tail, row.el.querySelector('.tail'), row.look.tail(s), t)
     else row.el.querySelector('.tail').textContent = nativeTime(s.elapsed)
   }

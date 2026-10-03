@@ -31,6 +31,7 @@
   .art { display: inline-flex; align-items: center; height: 20px; flex-shrink: 0; }
   .art svg, .tail svg { display: block; }
   .text { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; }
+  .text:empty { display: none; }
   .tail { margin-left: 8px; font-variant-numeric: tabular-nums; display: inline-flex; align-items: center; flex-shrink: 0; }
   .chev { margin-left: 6px; color: var(--faint); flex-shrink: 0; }
   .native .variant { border-top: 0; padding-top: 4px; }
@@ -40,7 +41,7 @@
 <body>
 <main>
   <h1>nowloading · themes</h1>
-  <p class="lede">Each row is the Code tab's turn line: the art takes the place of the dots, and the step and the real time stay. Every look is its own theme, picked with <code>/nowloading &lt;name&gt;</code>. A scripted turn plays on a loop.</p>
+  <p class="lede">Each row mirrors the Code tab's status line: animation, elapsed time, and the Thinking label when active. Every look is its own theme, picked with <code>/nowloading &lt;name&gt;</code>. A scripted turn plays on a loop.</p>
   <div class="controls" id="controls"></div>
   <section class="native">
     <div class="variant"><div class="caption"><b>Today</b>native</div><div class="row" id="native"></div></div>
@@ -58,7 +59,7 @@ const DOTS = s => svg(14, s.mode === 'done' ? '' : [[3.5, 7], [9.5, 7], [6.5, 12
   `<circle cx="${x}" cy="${y}" r="1.9" fill="#d97757"><animate attributeName="opacity" values="1;0.35;1" dur="1.2s" begin="${-i * 0.4}s" repeatCount="indefinite"/></circle>`).join(''))
 
 const rows = []
-document.getElementById('native').innerHTML = `<span class="art"></span><span class="text"></span><span class="tail"></span>${CHEVRON}`
+document.getElementById('native').innerHTML = `<span class="art"></span><span class="tail"></span><span class="text"></span>${CHEVRON}`
 rows.push({ el: document.getElementById('native'), look: { art: DOTS } })
 const host = document.getElementById('themes')
 for (const fam of families) {
@@ -69,7 +70,7 @@ for (const fam of families) {
     const v = document.createElement('div')
     v.className = 'variant'
     v.innerHTML = `<div class="caption"><b><code>${look.name}</code></b>${look.note}</div>` +
-      `<div class="row"><span class="art"></span><span class="text"></span><span class="tail"></span>${CHEVRON}</div>`
+      `<div class="row"><span class="art"></span><span class="tail"></span><span class="text"></span>${CHEVRON}</div>`
     sec.appendChild(v)
     rows.push({ el: v.querySelector('.row'), look })
   })
@@ -85,7 +86,7 @@ function draw() {
     // Like the desktop: an unchanged picture keeps running, a changed one starts over
     const markup = look.art(s)
     if (markup !== row.markup) { el.querySelector('.art').innerHTML = markup; row.markup = markup }
-    el.querySelector('.text').textContent = s.mode === 'done' ? s.text : `${s.text}…`
+    el.querySelector('.text').textContent = s.mode === 'thinking' ? 'Thinking' : ''
   }
   tick()
   for (const b of document.querySelectorAll('[data-step]')) b.classList.toggle('on', pinned === +b.dataset.step)

@@ -28,8 +28,8 @@ for (const scheme of ['light', 'dark']) {
       const box = document.createElement('div'); if (zoom) box.className = 'zoom'; col.appendChild(box)
       for (const [label, step] of (zoom ? STATES : STATES.filter((_, i) => i === 2 || i === 4))) {
         const s = snapshot(step, 75)
-        const text = s.mode === 'done' ? s.text : s.text + '…'
-        box.insertAdjacentHTML('beforeend', `<div class="row"><span class="state">${label}${zoom ? '' : ' (1x)'}</span><span class="art">${look.art(s)}</span><span class="text">${text}</span><span class="tail">${look.tail ? look.tail(s) : nativeTime(s.elapsed)}</span></div>`)
+        const text = s.mode === 'thinking' ? 'Thinking' : ''
+        box.insertAdjacentHTML('beforeend', `<div class="row"><span class="state">${label}${zoom ? '' : ' (1x)'}</span><span class="art">${look.art(s)}</span><span class="tail">${look.tail ? look.tail(s) : nativeTime(s.elapsed)}</span><span class="text">${text}</span></div>`)
       }
     }
   }
