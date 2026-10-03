@@ -9,7 +9,10 @@ const FPS = 10
 
 const { evaluate, shot, page, close } = await open('art/row.html')
 try {
-  const names = await evaluate(`import('../themes/index.js').then(m => m.NAMES)`)
+  const allNames = await evaluate(`import('../themes/index.js').then(m => m.NAMES)`)
+  const requested = process.argv.slice(2)
+  for (const name of requested) if (!allNames.includes(name)) throw new Error(`Unknown theme: ${name}`)
+  const names = requested.length ? allNames.filter(name => requested.includes(name)) : allNames
   rmSync(OUT, { recursive: true, force: true })
   for (const name of names) {
     mkdirSync(join(OUT, name), { recursive: true })

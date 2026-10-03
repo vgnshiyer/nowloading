@@ -1,7 +1,7 @@
 {
   "name": "nowloading",
-  "version": "0.1.0",
-  "description": "The line that animates while Claude works, redrawn as something from before: a VCR's on-screen display, a split-flap departure board, an hourglass.",
+  "version": "0.2.0",
+  "description": "The line that animates while Claude works, redrawn as something from before: tape decks, departure boards, an hourglass, a floppy drive, a dot-matrix printer, an arcade rally, and a filmstrip.",
   "author": {
     "name": "vgnshiyer"
   },
@@ -29,6 +29,10 @@
         "platform",
         "arrivals",
         "sandglass",
+        "floppy",
+        "dotmatrix",
+        "pong",
+        "filmstrip",
         "random"
       ]
     }

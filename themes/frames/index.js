@@ -5,5 +5,9 @@ import cassette from './cassette.js'
 import platform from './platform.js'
 import arrivals from './arrivals.js'
 import sandglass from './sandglass.js'
+import floppy from './floppy.js'
+import dotmatrix from './dotmatrix.js'
+import pong from './pong.js'
+import filmstrip from './filmstrip.js'
 
-export const FRAMES = { rewind, channel3, cassette, platform, arrivals, sandglass }
+export const FRAMES = { rewind, channel3, cassette, platform, arrivals, sandglass, floppy, dotmatrix, pong, filmstrip }

@@ -37,7 +37,10 @@ function period(durs) {
 
 const { evaluate, shot, close } = await open('art/capture.html')
 try {
-  const names = await evaluate(`import('../themes/index.js').then(m => m.NAMES)`)
+  const allNames = await evaluate(`import('../themes/index.js').then(m => m.NAMES)`)
+  const requested = process.argv.slice(2)
+  for (const name of requested) if (!allNames.includes(name)) throw new Error(`Unknown theme: ${name}`)
+  const names = requested.length ? allNames.filter(name => requested.includes(name)) : allNames
   rmSync(OUT, { recursive: true, force: true })
   mkdirSync(OUT, { recursive: true })
   const manifest = {}
@@ -63,7 +66,7 @@ try {
       console.log(`${name} ${state}: ${introFrames} intro + ${times.length - introFrames} loop frames`)
     }
   }
-  writeFileSync(join(OUT, 'manifest.json'), JSON.stringify({ fps: FPS, scale: SCALE, themes: manifest }, null, 1))
+  writeFileSync(join(OUT, 'manifest.json'), JSON.stringify({ fps: FPS, scale: SCALE, names: allNames, themes: manifest }, null, 1))
 } finally {
   close()
 }
